@@ -9,3 +9,8 @@ export const MeterModel = t.model('MeterModel', {
   address: t.string,
   description: t.string,
 });
+
+export const MeterData = t.model('MeterData', {
+  results: t.array(MeterModel),
+
+})
