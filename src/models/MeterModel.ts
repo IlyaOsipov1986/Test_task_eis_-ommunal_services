@@ -1,5 +1,6 @@
-import { t, flow } from 'mobx-state-tree';
+import { flow, t } from 'mobx-state-tree';
 import { getAddress, getListMeters } from '../utils/api';
+import { d } from 'vite/dist/node/types.d-aGj9QkWt';
 
 const Area = t.model('Area', {
   id: t.string,
@@ -46,18 +47,16 @@ export const MeterData = t
         const areas = self?.resultsMeters?.map((el) => el?.area?.id);
         const uniqAreas = new Set(areas);
         const responseAddresses: [] = [];
-        for (const el of uniqAreas) {
+        for (const el of Array.from(uniqAreas)) {
           try {
-            let idArea: string | undefined = el;
-            // @ts-ignore
-            const address = yield getAddress(idArea);
-            // @ts-ignore
+            const address = yield getAddress(el);
             responseAddresses.push(address);
           } catch (error) {
-            console.log('Failed to fetch meters', error);
+            console.log('Failed to fetch address', error);
           }
         }
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         self.resultsAddress = responseAddresses;
       } catch (error) {
         console.log('Failed to fetch meters', error);

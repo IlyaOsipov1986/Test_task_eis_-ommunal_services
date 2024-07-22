@@ -8,11 +8,14 @@ export const RootStore = t
   .views((self) => ({
     get showMeters() {
       if (self.meters.resultsMeters && self.meters.resultsMeters.length > 0) {
+        const meters = self.meters.resultsMeters?.map((el) => el);
         const addresses = self?.meters?.resultsAddress?.map((el) => el);
-        console.log(addresses);
-        let gg = [{ id: 'dsds' }];
-
-        return addresses;
+        return meters.map((meter) => {
+          const findAddress = addresses?.find(address => address.id === meter.area.id);
+          if(findAddress) {
+            return {...meter, address: findAddress};
+          }
+        })
       }
       return [];
     },
