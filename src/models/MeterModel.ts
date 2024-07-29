@@ -1,6 +1,5 @@
 import { flow, t } from 'mobx-state-tree';
 import { getAddress, getListMeters } from '../utils/api';
-import { d } from 'vite/dist/node/types.d-aGj9QkWt';
 
 const Area = t.model('Area', {
   id: t.string,
@@ -50,6 +49,7 @@ export const MeterData = t
         for (const el of Array.from(uniqAreas)) {
           try {
             const address = yield getAddress(el);
+            // @ts-ignore
             responseAddresses.push(address);
           } catch (error) {
             console.log('Failed to fetch address', error);

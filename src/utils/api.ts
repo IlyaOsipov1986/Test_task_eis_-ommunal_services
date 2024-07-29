@@ -17,7 +17,7 @@ export const getListMeters = async (limit: number, offset: number) => {
   return responseMeters;
 };
 
-export const getAddress = (id: string) => {
+export const getAddress = (id: string | undefined) => {
   const responseAddress: TRequest = apiService
     .get(`areas/?id__in=${id}`)
     .then((response) => response.data.results[0])
