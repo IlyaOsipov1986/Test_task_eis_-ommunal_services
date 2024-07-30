@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from './models/RootStore';
-import { Space, Table, type TableProps } from 'antd';
+import { Tag, Space, Table, type TableProps } from 'antd';
 import { IDataMeters } from './types/meters';
 
 const columns: TableProps<IDataMeters>['columns'] = [
   {
     title: '№',
-    dataIndex: 'index',
-    key: 'index',
+    dataIndex: 'id',
+    key: 'id',
   },
   // {
   //   title: 'Тип',
@@ -41,6 +41,11 @@ const columns: TableProps<IDataMeters>['columns'] = [
     dataIndex: 'address',
     key: 'address',
   },
+  {
+    title: 'Примечание',
+    dataIndex: 'description',
+    key: 'description',
+  },
   // {
   //   title: 'Action',
   //   key: 'action',
@@ -58,12 +63,14 @@ function App() {
 
   const data: IDataMeters[] | any[] = rootStore?.showMeters.map((el) => el);
 
-  console.log(rootStore.showMeters);
+  console.log(data);
 
   return (
     <div className="App">
       <h3>Список счетчиков</h3>
-      <Table columns={columns} dataSource={data} />
+      {data && data.length > 0 && !data.includes(undefined) && (
+        <Table columns={columns} dataSource={data} rowKey={'id'} />
+      )}
     </div>
   );
 }
