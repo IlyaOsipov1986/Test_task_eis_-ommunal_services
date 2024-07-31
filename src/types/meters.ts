@@ -1,13 +1,14 @@
 export type TRequest = void | any;
 
 export interface IDataMeters {
+  index?: number;
+  id: string;
   _type: string[];
   installation_date: string;
   is_automatic: boolean;
   initial_values: string[];
   address?: IAddress;
   description: null | string;
-  id: string;
   communication: null | string;
   serial_number: null | string;
   brand_name: null | string;

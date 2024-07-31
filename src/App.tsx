@@ -2,12 +2,14 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from './models/RootStore';
 import { Tag, Space, Table, type TableProps } from 'antd';
 import { IDataMeters } from './types/meters';
+import { formatDateFrom } from './utils/utils';
 
 const columns: TableProps<IDataMeters>['columns'] = [
   {
     title: '№',
-    dataIndex: 'id',
+    dataIndex: 'index',
     key: 'id',
+    width: 50,
   },
   // {
   //   title: 'Тип',
@@ -25,11 +27,13 @@ const columns: TableProps<IDataMeters>['columns'] = [
     title: 'Дата установки',
     dataIndex: 'installation_date',
     key: 'installation_date',
+    width: 200,
   },
   {
     title: 'Автоматический',
     dataIndex: 'is_automatic',
     key: 'is_automatic',
+    width: 200,
   },
   {
     title: 'Текущие показания',
@@ -61,9 +65,13 @@ const columns: TableProps<IDataMeters>['columns'] = [
 function App() {
   const rootStore = useStore();
 
-  const data: IDataMeters[] | any[] = rootStore?.showMeters.map((el) => el);
-
-  console.log(data);
+  const data: IDataMeters[] | any[] = rootStore?.showMeters.map((el, index) => {
+    return {
+      ...el,
+      installation_date: formatDateFrom(el?.installation_date),
+      index: index + 1,
+    };
+  });
 
   return (
     <div className="App">
